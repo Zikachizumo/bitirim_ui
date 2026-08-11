@@ -1,0 +1,2858 @@
+
+/* =========================================================
+   FONT
+   ========================================================= */
+
+@font-face {
+    font-family: "Bungee Inline";
+    src:
+        url("fonts/BungeeInline-Regular.ttf")
+        format("truetype");
+
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+}
+
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+:root {
+    --background: #19023A;
+
+    --panel-deep: rgba(8, 5, 18, 0.97);
+    --panel-light: rgba(55, 42, 75, 0.68);
+
+    --gold: #D4AF37;
+    --gold-light: #EDCE70;
+    --gold-dark: #8B6C20;
+
+    --purple: #C347FF;
+    --purple-light: #DA71FF;
+    --purple-deep: #7610A7;
+
+    --body-text: rgba(235, 218, 174, 0.74);
+
+    --radius: 24px;
+}
+
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+
+    user-select: none;
+}
+
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: hidden;
+
+    background: transparent;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+
+button {
+    font: inherit;
+}
+
+
+/* =========================================================
+   APP
+   EXACT CENTER
+   ========================================================= */
+
+.app {
+    position: fixed;
+
+    inset: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: var(--background);
+
+    opacity: 1;
+
+    transition:
+        opacity 180ms ease;
+}
+
+
+.app.hidden {
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   DOT CANVAS
+   ========================================================= */
+
+#dotCanvas {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   MAIN PANEL
+   75% WIDTH + 75% HEIGHT
+   ========================================================= */
+
+.creator-panel {
+    position: relative;
+
+    z-index: 2;
+
+    width: 75vw;
+    height: 75vh;
+
+    min-width: 900px;
+    min-height: 560px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    border-radius: var(--radius);
+
+    border:
+        1px
+        solid
+        rgba(218, 181, 68, 0.68);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--panel-light) 0%,
+            rgba(20, 13, 34, 0.94) 36%,
+            var(--panel-deep) 100%
+        );
+
+    box-shadow:
+        0 36px 115px rgba(0, 0, 0, 0.55),
+        0 5px 24px rgba(0, 0, 0, 0.38),
+        inset 0 1px 0 rgba(255,255,255,0.11),
+        inset 0 -1px 0 rgba(212,175,55,0.10);
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+
+.creator-panel::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 2px;
+
+    z-index: 0;
+
+    border-radius: 21px;
+
+    border:
+        1px
+        solid
+        rgba(255,255,255,0.035);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   GLASS REFLECTION
+   ========================================================= */
+
+.glass-reflection {
+    position: absolute;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    transform: skewX(-26deg);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.13),
+            rgba(255,255,255,0)
+        );
+}
+
+
+.reflection-left {
+    top: -18%;
+    left: 4%;
+
+    width: 32%;
+    height: 40%;
+
+    opacity: 0.28;
+}
+
+
+.reflection-right {
+    top: -23%;
+    right: -3%;
+
+    width: 25%;
+    height: 42%;
+
+    opacity: 0.08;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.creator-header {
+    position: relative;
+
+    z-index: 10;
+
+    flex: 0 0 auto;
+
+    width: 100%;
+
+    padding:
+        clamp(25px, 3vh, 38px)
+        clamp(44px, 4vw, 80px)
+        8px;
+}
+
+
+.header-row {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(100px, 1fr)
+        auto
+        minmax(100px, 1fr);
+
+    align-items: center;
+
+    column-gap: 13px;
+}
+
+
+/* =========================================================
+   HEADER SIDES
+   ========================================================= */
+
+.header-side {
+    position: relative;
+
+    z-index: 8;
+
+    height: 30px;
+
+    display: flex;
+
+    align-items: center;
+}
+
+
+.header-line {
+    position: relative;
+
+    z-index: 8;
+
+    flex: 1;
+
+    height: 2px;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
+
+    background: var(--gold);
+
+    box-shadow:
+        0 0 4px rgba(212,175,55,0.10);
+}
+
+
+/* =========================================================
+   ARROWS
+   ========================================================= */
+
+.header-arrow {
+    position: relative;
+
+    z-index: 10;
+
+    width: 23px;
+    height: 30px;
+
+    flex: 0 0 23px;
+}
+
+
+.arrow-right::before,
+.arrow-right::after {
+    content: "";
+
+    position: absolute;
+
+    right: 3px;
+
+    width: 15px;
+    height: 2px;
+
+    background: var(--gold);
+
+    transform-origin: right center;
+}
+
+
+.arrow-right::before {
+    top: 9px;
+
+    transform: rotate(42deg);
+}
+
+
+.arrow-right::after {
+    bottom: 9px;
+
+    transform: rotate(-42deg);
+}
+
+
+.arrow-left::before,
+.arrow-left::after {
+    content: "";
+
+    position: absolute;
+
+    left: 3px;
+
+    width: 15px;
+    height: 2px;
+
+    background: var(--gold);
+
+    transform-origin: left center;
+}
+
+
+.arrow-left::before {
+    top: 9px;
+
+    transform: rotate(-42deg);
+}
+
+
+.arrow-left::after {
+    bottom: 9px;
+
+    transform: rotate(42deg);
+}
+
+
+/* =========================================================
+   TITLE BOX
+   box under arrows/lines layer
+   ========================================================= */
+
+.header-title-box {
+    position: relative;
+
+    z-index: 3;
+
+    padding:
+        10px
+        clamp(23px, 2vw, 37px)
+        12px;
+
+    border-radius: 13px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.66);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25,17,38,0.90),
+            rgba(10,6,19,0.96)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.06),
+        0 0 15px rgba(212,175,55,0.07);
+}
+
+
+.header-title-box h1 {
+    margin: 0;
+
+    color: var(--gold-light);
+
+    white-space: nowrap;
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(29px, 2.2vw, 47px);
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    letter-spacing: 0.1px;
+
+    text-transform: uppercase;
+
+    text-align: center;
+
+    text-shadow:
+        0 2px 3px rgba(0,0,0,0.92),
+        0 0 8px rgba(212,175,55,0.10);
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.creator-content {
+    position: relative;
+
+    z-index: 4;
+
+    flex: 1;
+
+    min-height: 0;
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        8px
+        clamp(50px, 5vw, 105px)
+        18px;
+}
+
+
+.creator-content.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   STEP COUNTER
+   ========================================================= */
+
+.step-counter {
+    position: absolute;
+
+    top: 6px;
+    right: clamp(48px, 4vw, 80px);
+
+    display: flex;
+
+    align-items: baseline;
+
+    gap: 5px;
+
+    color:
+        rgba(230,199,104,0.52);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(12px, 0.75vw, 15px);
+}
+
+
+.step-current {
+    color: var(--gold-light);
+
+    font-size:
+        clamp(18px, 1.1vw, 23px);
+}
+
+
+.step-divider {
+    opacity: 0.45;
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.intro {
+    text-align: center;
+
+    margin-bottom:
+        clamp(18px, 2.5vh, 32px);
+}
+
+
+.intro h2,
+.identity-step h2 {
+    margin:
+        0
+        0
+        10px;
+
+    color: var(--gold-light);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(21px, 1.55vw, 31px);
+
+    font-weight: 400;
+
+    line-height: 1.1;
+
+    text-shadow:
+        0 2px 3px rgba(0,0,0,0.88);
+}
+
+
+.intro p,
+.identity-step p {
+    margin: 0;
+
+    max-width: 700px;
+
+    color: var(--body-text);
+
+    font-size:
+        clamp(13px, 0.9vw, 17px);
+
+    font-weight: 600;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   GENDER GRID
+   ========================================================= */
+
+.gender-grid {
+    width:
+        min(760px, 76%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        clamp(34px, 4vw, 68px);
+}
+
+
+/* =========================================================
+   GENDER CARD
+   ========================================================= */
+
+.gender-card {
+    position: relative;
+
+    min-height:
+        clamp(235px, 30vh, 345px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        clamp(17px, 1.8vw, 27px);
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    outline: none;
+
+    border-radius: 21px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.42);
+
+    color: inherit;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(48,36,64,0.60),
+            rgba(11,7,23,0.93)
+        );
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.31),
+        inset 0 1px 0 rgba(255,255,255,0.052);
+
+    transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        box-shadow 160ms ease,
+        background 160ms ease;
+}
+
+
+.gender-card:hover,
+.gender-card.focused {
+    transform:
+        translateY(-4px);
+
+    border-color:
+        rgba(230,197,103,0.88);
+
+    box-shadow:
+        0 21px 44px rgba(0,0,0,0.37),
+        0 0 12px rgba(212,175,55,0.08),
+        inset 0 1px 0 rgba(255,255,255,0.07);
+}
+
+
+.gender-card.selected {
+    transform:
+        translateY(-6px);
+
+    border:
+        2px
+        solid
+        rgba(202,72,255,0.97);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(76,41,95,0.69),
+            rgba(13,7,27,0.95)
+        );
+
+    box-shadow:
+        0 0 6px rgba(204,78,255,0.98),
+        0 0 25px rgba(177,46,255,0.35),
+        0 24px 48px rgba(0,0,0,0.39),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+}
+
+
+/* =========================================================
+   SELECTION GLOW
+   ========================================================= */
+
+.selection-light {
+    position: absolute;
+
+    left: 15%;
+    right: 15%;
+
+    bottom: -48px;
+
+    height: 105px;
+
+    opacity: 0;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            ellipse,
+            rgba(194,61,255,0.38),
+            transparent 68%
+        );
+
+    transition:
+        opacity 170ms ease;
+}
+
+
+.gender-card.selected
+.selection-light {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   PORTRAIT
+   ========================================================= */
+
+.portrait-ring {
+    position: relative;
+
+    z-index: 2;
+
+    width:
+        clamp(145px, 11.5vw, 210px);
+
+    height:
+        clamp(145px, 11.5vw, 210px);
+
+    margin-bottom:
+        clamp(8px, 1.2vh, 15px);
+
+    filter:
+        drop-shadow(
+            0 15px 16px rgba(0,0,0,0.42)
+        );
+}
+
+
+.portrait {
+    width: 100%;
+    height: 100%;
+}
+
+
+.portrait-background {
+    fill:
+        rgba(165,45,221,0.14);
+
+    stroke:
+        rgba(198,72,255,0.67);
+
+    stroke-width: 3;
+}
+
+
+.gender-card.selected
+.portrait-background {
+    fill:
+        rgba(178,46,255,0.22);
+
+    stroke:
+        var(--purple-light);
+
+    filter:
+        drop-shadow(
+            0 0 7px rgba(204,85,255,0.46)
+        );
+}
+
+
+.skin {
+    fill: #D3A572;
+}
+
+
+.skin-shadow {
+    fill: #BE8B5C;
+}
+
+
+.hair {
+    fill: #151019;
+}
+
+
+.clothing {
+    fill: #211B29;
+}
+
+
+.collar {
+    fill: #E3D5B7;
+}
+
+
+.male-jacket {
+    fill: #1D1925;
+}
+
+
+.male-shirt {
+    fill: #DDD6C6;
+}
+
+
+.tie {
+    fill: #B48F31;
+}
+
+
+/* =========================================================
+   GENDER TITLE
+   ========================================================= */
+
+.gender-title {
+    position: relative;
+
+    z-index: 2;
+
+    color: var(--gold-light);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(20px, 1.45vw, 28px);
+
+    line-height: 1;
+
+    text-shadow:
+        0 2px 3px rgba(0,0,0,0.85);
+}
+
+
+.selected-label {
+    position: relative;
+
+    z-index: 2;
+
+    height: 17px;
+
+    margin-top: 7px;
+
+    opacity: 0;
+
+    color: #D46BFF;
+
+    font-size:
+        clamp(9px, 0.62vw, 12px);
+
+    font-weight: 900;
+
+    letter-spacing: 2.2px;
+
+    transition:
+        opacity 150ms ease;
+}
+
+
+.gender-card.selected
+.selected-label {
+    opacity: 1;
+}
+
+
+/* =========================================================
+   CONTINUE BUTTON
+   ========================================================= */
+
+.continue-button {
+    position: relative;
+
+    min-width:
+        clamp(190px, 16vw, 280px);
+
+    height:
+        clamp(49px, 5.6vh, 64px);
+
+    margin-top:
+        clamp(20px, 2.8vh, 34px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 14px;
+
+    cursor: pointer;
+
+    border-radius: 12px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.73);
+
+    color: var(--gold-light);
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(83,61,23,0.22),
+            rgba(35,24,17,0.55),
+            rgba(83,61,23,0.22)
+        );
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(16px, 1.1vw, 22px);
+
+    font-weight: 400;
+
+    transition:
+        transform 150ms ease,
+        opacity 150ms ease,
+        border-color 150ms ease,
+        box-shadow 150ms ease;
+}
+
+
+.continue-button:not(:disabled):hover,
+.continue-button.focused {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #E1BD4B;
+
+    box-shadow:
+        0 0 16px rgba(212,175,55,0.13);
+}
+
+
+.continue-button:disabled {
+    opacity: 0.25;
+
+    cursor: default;
+
+    filter:
+        grayscale(0.4);
+}
+
+
+.continue-arrow {
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 29px;
+
+    line-height: 0;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   IDENTITY PLACEHOLDER
+   ========================================================= */
+
+.identity-step {
+    text-align: center;
+}
+
+
+.identity-icon {
+    width:
+        clamp(100px, 8vw, 145px);
+
+    height:
+        clamp(100px, 8vw, 145px);
+
+    margin-bottom: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--gold-light);
+
+    border-radius: 23px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.42);
+
+    background:
+        rgba(255,255,255,0.018);
+
+    box-shadow:
+        0 0 23px rgba(177,46,255,0.09);
+}
+
+
+.identity-icon svg {
+    width: 62%;
+    height: 62%;
+
+    fill: none;
+
+    stroke: currentColor;
+
+    stroke-width: 2;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+.selected-gender-result {
+    margin-top: 30px;
+
+    padding:
+        12px
+        25px;
+
+    border-radius: 10px;
+
+    border:
+        1px
+        solid
+        rgba(198,70,255,0.60);
+
+    color: var(--gold-light);
+
+    background:
+        rgba(177,46,255,0.055);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(13px, 0.9vw, 17px);
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.creator-footer {
+    position: relative;
+
+    z-index: 9;
+
+    flex:
+        0
+        0
+        clamp(57px, 6.3vh, 72px);
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-top:
+        1px
+        solid
+        rgba(212,175,55,0.89);
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(9,5,17,0.17),
+            rgba(7,4,14,0.70)
+        );
+}
+
+
+/* =========================================================
+   FOOTER CENTER DETAIL
+   ========================================================= */
+
+.footer-decoration {
+    position: absolute;
+
+    left: 50%;
+    top: -4px;
+
+    width:
+        clamp(240px, 23vw, 390px);
+
+    height: 8px;
+
+    transform:
+        translateX(-50%);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.footer-wing {
+    flex: 1;
+
+    height: 2px;
+
+    background: #CDA438;
+}
+
+
+.footer-light {
+    width: 55px;
+    height: 2px;
+
+    background: #F4D36D;
+
+    box-shadow:
+        0 0 5px #D4AF37,
+        0 0 12px rgba(212,175,55,0.43);
+}
+
+
+/* =========================================================
+   FOOTER CONTROLS
+   ========================================================= */
+
+.footer-controls {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 25px;
+
+    color:
+        rgba(232,203,124,0.89);
+
+    font-size:
+        clamp(12px, 0.82vw, 16px);
+
+    font-weight: 650;
+}
+
+
+.footer-controls strong {
+    color: var(--gold-light);
+}
+
+
+.footer-separator {
+    width: 1px;
+    height: 15px;
+
+    background:
+        rgba(212,175,55,0.62);
+}
+
+
+/* =========================================================
+   1366 / SMALLER WIDTH
+   ========================================================= */
+
+@media (max-width: 1400px) {
+
+    .creator-panel {
+        width: 75vw;
+        height: 75vh;
+
+        min-width: 820px;
+        min-height: 520px;
+    }
+
+
+    .creator-header {
+        padding-top: 19px;
+    }
+
+
+    .header-title-box h1 {
+        font-size:
+            clamp(26px, 2vw, 38px);
+    }
+
+
+    .gender-grid {
+        width: 80%;
+    }
+
+
+    .gender-card {
+        min-height: 215px;
+    }
+
+}
+
+
+/* =========================================================
+   SHORTER SCREENS
+   ========================================================= */
+
+@media (max-height: 760px) {
+
+    .creator-panel {
+        width: 75vw;
+        height: 75vh;
+
+        min-height: 500px;
+    }
+
+
+    .creator-header {
+        padding-top: 15px;
+        padding-bottom: 3px;
+    }
+
+
+    .intro {
+        margin-bottom: 11px;
+    }
+
+
+    .gender-card {
+        min-height: 190px;
+    }
+
+
+    .portrait-ring {
+        width: 125px;
+        height: 125px;
+    }
+
+
+    .continue-button {
+        margin-top: 13px;
+    }
+
+
+    .creator-footer {
+        flex-basis: 49px;
+    }
+
+}
+
+
+/* =========================================================
+   IDENTITY DETAILS
+   ========================================================= */
+
+.identity-step {
+    text-align: center;
+}
+
+
+.identity-intro {
+    margin-bottom:
+        clamp(30px, 4vh, 52px);
+}
+
+
+.identity-form {
+    width:
+        min(780px, 72%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap:
+        clamp(30px, 3vw, 55px);
+}
+
+
+.identity-field {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    text-align: left;
+}
+
+
+.identity-field label {
+    margin:
+        0
+        0
+        9px
+        3px;
+
+    color:
+        rgba(226, 194, 102, 0.88);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(12px, 0.82vw, 16px);
+
+    font-weight: 400;
+
+    letter-spacing: 0.7px;
+}
+
+
+.input-shell {
+    position: relative;
+
+    width: 100%;
+
+    height:
+        clamp(58px, 6.5vh, 74px);
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 13px;
+
+    border:
+        1px
+        solid
+        rgba(212, 175, 55, 0.48);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(44, 33, 59, 0.61),
+            rgba(11, 7, 22, 0.92)
+        );
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.05),
+        0 12px 28px rgba(0,0,0,0.22);
+
+    transition:
+        border-color 150ms ease,
+        box-shadow 150ms ease,
+        background 150ms ease;
+}
+
+
+.input-shell:focus-within {
+    border-color:
+        rgba(203, 74, 255, 0.97);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(68, 40, 83, 0.68),
+            rgba(12, 7, 25, 0.95)
+        );
+
+    box-shadow:
+        0 0 6px rgba(203, 74, 255, 0.78),
+        0 0 20px rgba(178, 46, 255, 0.20),
+        inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+
+.input-shell.valid {
+    border-color:
+        rgba(212, 175, 55, 0.78);
+}
+
+
+.input-shell.invalid {
+    border-color:
+        rgba(215, 91, 91, 0.78);
+
+    box-shadow:
+        0 0 12px rgba(215, 91, 91, 0.08);
+}
+
+
+.identity-field input {
+    width: 100%;
+    height: 100%;
+
+    padding:
+        0
+        48px
+        0
+        20px;
+
+    border: 0;
+    outline: 0;
+
+    color: #EFE2BF;
+
+    background: transparent;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    font-size:
+        clamp(17px, 1.15vw, 22px);
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    caret-color:
+        #CB4AFF;
+}
+
+
+.identity-field input::placeholder {
+    color:
+        rgba(230, 210, 164, 0.24);
+}
+
+
+.input-status {
+    position: absolute;
+
+    right: 17px;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    background: var(--gold-light);
+
+    box-shadow:
+        0 0 7px rgba(212,175,55,0.45);
+
+    transition:
+        opacity 150ms ease;
+}
+
+
+.input-shell.valid
+.input-status {
+    opacity: 1;
+}
+
+
+.field-error {
+    min-height: 18px;
+
+    margin:
+        7px
+        0
+        0
+        3px;
+
+    color:
+        rgba(235, 116, 116, 0.88);
+
+    font-size:
+        clamp(10px, 0.67vw, 12px);
+
+    font-weight: 700;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   IDENTITY ACTIONS
+   ========================================================= */
+
+.identity-actions {
+    margin-top:
+        clamp(36px, 5vh, 60px);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap:
+        clamp(20px, 2vw, 32px);
+}
+
+
+.identity-continue {
+    margin-top: 0;
+}
+
+
+.secondary-button {
+    min-width:
+        clamp(150px, 12vw, 215px);
+
+    height:
+        clamp(49px, 5.6vh, 64px);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    border-radius: 12px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.37);
+
+    color:
+        rgba(231, 203, 124, 0.77);
+
+    background:
+        rgba(255,255,255,0.016);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(14px, 0.95vw, 19px);
+
+    cursor: pointer;
+
+    transition:
+        border-color 150ms ease,
+        color 150ms ease,
+        background 150ms ease,
+        transform 150ms ease;
+}
+
+
+.secondary-button:hover,
+.secondary-button:focus {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        rgba(212,175,55,0.75);
+
+    color:
+        var(--gold-light);
+
+    background:
+        rgba(212,175,55,0.04);
+
+    outline: none;
+}
+
+
+.secondary-button > span {
+    font-family:
+        Arial,
+        sans-serif;
+
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   STEP 3 PLACEHOLDER
+   ========================================================= */
+
+.appearance-step {
+    text-align: center;
+}
+
+
+.appearance-step h2 {
+    margin:
+        0
+        0
+        10px;
+
+    color:
+        var(--gold-light);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(22px, 1.6vw, 32px);
+
+    font-weight: 400;
+}
+
+
+.appearance-step p {
+    margin: 0;
+
+    color: var(--body-text);
+
+    font-size:
+        clamp(13px, 0.9vw, 17px);
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   IDENTITY RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1200px) {
+
+    .identity-form {
+        width: 82%;
+    }
+
+}
+
+
+@media (max-height: 700px) {
+
+    .identity-intro {
+        margin-bottom: 20px;
+    }
+
+
+    .identity-actions {
+        margin-top: 24px;
+    }
+
+}
+
+
+/* =========================================================
+   APPEARANCE - LIVE GTA PED MODE
+   ========================================================= */
+
+.app.appearance-live {
+    background:
+        rgba(25, 2, 58, 0.68);
+}
+
+
+.app.appearance-live .creator-panel {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(52, 38, 70, 0.63),
+            rgba(17, 10, 29, 0.79) 38%,
+            rgba(7, 4, 15, 0.84) 100%
+        );
+}
+
+
+/* =========================================================
+   APPEARANCE ROOT
+   ========================================================= */
+
+.appearance-step {
+    padding:
+        4px
+        clamp(36px, 3.3vw, 64px)
+        10px;
+}
+
+
+.appearance-layout {
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(410px, 1.15fr)
+        minmax(310px, 0.85fr);
+
+    gap:
+        clamp(25px, 2.3vw, 44px);
+
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   LEFT EDITOR
+   ========================================================= */
+
+.appearance-editor {
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    padding:
+        clamp(15px, 1.3vw, 21px);
+
+    border-radius: 18px;
+
+    border:
+        1px
+        solid
+        rgba(212, 175, 55, 0.27);
+
+    background:
+        rgba(9, 5, 18, 0.72);
+
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.035),
+        0 15px 38px rgba(0,0,0,0.23);
+
+    backdrop-filter:
+        blur(10px);
+}
+
+
+/* =========================================================
+   TABS
+   ========================================================= */
+
+.appearance-tabs {
+    flex: 0 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 7px;
+
+    margin-bottom: 15px;
+}
+
+
+.appearance-tab {
+    min-height: 43px;
+
+    border-radius: 9px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,0.20);
+
+    color:
+        rgba(226, 196, 112, 0.57);
+
+    background:
+        rgba(255,255,255,0.012);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(10px, .68vw, 14px);
+
+    cursor: pointer;
+
+    transition:
+        color 140ms ease,
+        border-color 140ms ease,
+        background 140ms ease,
+        box-shadow 140ms ease;
+}
+
+
+.appearance-tab:hover {
+    color:
+        rgba(237, 206, 118, 0.90);
+}
+
+
+.appearance-tab.active {
+    color: #EDCE70;
+
+    border-color:
+        rgba(201,70,255,0.79);
+
+    background:
+        rgba(177,46,255,0.085);
+
+    box-shadow:
+        0 0 12px rgba(184,45,245,0.10);
+}
+
+
+/* =========================================================
+   PAGES
+   ========================================================= */
+
+.appearance-page {
+    display: none;
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    padding:
+        2px
+        6px
+        10px
+        2px;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(212,175,55,.40)
+        transparent;
+}
+
+
+.appearance-page.active {
+    display: block;
+}
+
+
+.appearance-page::-webkit-scrollbar {
+    width: 5px;
+}
+
+
+.appearance-page::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+
+    background:
+        rgba(212,175,55,.40);
+}
+
+
+.appearance-heading {
+    margin-bottom: 17px;
+}
+
+
+.appearance-heading h2 {
+    margin:
+        0
+        0
+        5px;
+
+    color:
+        #EDCE70;
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(16px, 1.05vw, 22px);
+
+    font-weight: 400;
+}
+
+
+.appearance-heading p {
+    margin: 0;
+
+    color:
+        rgba(235,218,174,.53);
+
+    font-size:
+        clamp(10px, .68vw, 13px);
+
+    line-height: 1.45;
+}
+
+
+/* =========================================================
+   SELECTOR ROW
+   ========================================================= */
+
+.option-row {
+    display: grid;
+
+    grid-template-columns:
+        145px
+        1fr;
+
+    gap: 15px;
+
+    align-items: center;
+
+    min-height: 52px;
+
+    padding:
+        7px
+        0;
+
+    border-bottom:
+        1px
+        solid
+        rgba(212,175,55,.08);
+}
+
+
+.option-label {
+    color:
+        rgba(231,200,113,.80);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(10px, .67vw, 13px);
+}
+
+
+.option-selector {
+    height: 39px;
+
+    display: grid;
+
+    grid-template-columns:
+        40px
+        1fr
+        40px;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border-radius: 9px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,.28);
+
+    background:
+        rgba(255,255,255,.017);
+}
+
+
+.option-selector > span {
+    color:
+        #E9D6A2;
+
+    text-align: center;
+
+    font-size:
+        clamp(11px, .75vw, 14px);
+
+    font-weight: 700;
+}
+
+
+.option-selector button {
+    height: 100%;
+
+    border: 0;
+
+    color:
+        #E7C65F;
+
+    background:
+        rgba(212,175,55,.025);
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+.option-selector button:hover {
+    background:
+        rgba(177,46,255,.12);
+}
+
+
+/* =========================================================
+   RANGE
+   ========================================================= */
+
+.range-option,
+.detail-slider {
+    padding:
+        15px
+        1px
+        8px;
+}
+
+
+.range-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 8px;
+
+    color:
+        rgba(231,200,113,.83);
+
+    font-size:
+        clamp(10px, .68vw, 13px);
+
+    font-weight: 800;
+}
+
+
+.range-header span:last-child {
+    color:
+        #D667FF;
+}
+
+
+.range-ends {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 3px;
+
+    color:
+        rgba(226,207,158,.28);
+
+    font-size:
+        8px;
+
+    font-weight: 800;
+
+    letter-spacing: 1px;
+}
+
+
+input[type="range"] {
+    width: 100%;
+
+    height: 18px;
+
+    margin: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background:
+        transparent;
+
+    cursor: pointer;
+}
+
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 4px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(126,90,28,.85),
+            rgba(212,175,55,.95)
+        );
+}
+
+
+input[type="range"]::-webkit-slider-thumb {
+    width: 16px;
+    height: 16px;
+
+    margin-top: -6px;
+
+    border-radius: 50%;
+
+    border:
+        2px
+        solid
+        #F0D071;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background:
+        #A927D9;
+
+    box-shadow:
+        0 0 8px rgba(198,70,255,.58);
+}
+
+
+/* =========================================================
+   FACE FEATURES
+   ========================================================= */
+
+.face-feature-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+}
+
+
+.face-feature-row {
+    display: grid;
+
+    grid-template-columns:
+        150px
+        1fr
+        45px;
+
+    gap: 12px;
+
+    align-items: center;
+
+    min-height: 42px;
+
+    border-bottom:
+        1px
+        solid
+        rgba(212,175,55,.055);
+}
+
+
+.face-feature-name {
+    color:
+        rgba(228,198,111,.71);
+
+    font-size:
+        clamp(9px, .61vw, 12px);
+
+    font-weight: 800;
+}
+
+
+.face-feature-number {
+    color:
+        #D169F8;
+
+    text-align: right;
+
+    font-size:
+        10px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   GLOBAL APPEARANCE TOOLS
+   ========================================================= */
+
+.appearance-tools {
+    flex: 0 0 auto;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 9px;
+
+    margin-top: 12px;
+}
+
+
+.appearance-tool-button {
+    min-height: 39px;
+
+    border-radius: 9px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,.25);
+
+    color:
+        rgba(232,201,112,.72);
+
+    background:
+        rgba(255,255,255,.012);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-size:
+        clamp(9px, .58vw, 11px);
+
+    cursor: pointer;
+}
+
+
+.appearance-tool-button:hover {
+    color:
+        #EDCE70;
+
+    border-color:
+        rgba(196,69,255,.65);
+
+    background:
+        rgba(177,46,255,.065);
+}
+
+
+/* =========================================================
+   LIVE PED STAGE
+   ========================================================= */
+
+.live-ped-stage {
+    position: relative;
+
+    min-height: 0;
+
+    overflow: hidden;
+
+    border-radius: 19px;
+
+    border:
+        2px
+        solid
+        rgba(197,69,255,.77);
+
+    background:
+        rgba(7,3,15,.16);
+
+    box-shadow:
+        0 0 7px rgba(201,75,255,.58),
+        0 0 25px rgba(177,46,255,.19),
+        inset 0 0 35px rgba(177,46,255,.055);
+}
+
+
+.live-ped-stage::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 70%,
+            rgba(182,48,239,.08),
+            transparent 57%
+        );
+}
+
+
+.live-stage-label {
+    position: absolute;
+
+    top: 15px;
+    left: 17px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color:
+        rgba(233,207,136,.68);
+
+    font-size: 10px;
+
+    font-weight: 900;
+
+    letter-spacing: 1.2px;
+}
+
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        #CB4CFF;
+
+    box-shadow:
+        0 0 8px
+        rgba(203,76,255,.83);
+}
+
+
+/* =========================================================
+   ROTATE / CAMERA
+   ========================================================= */
+
+.rotation-controls {
+    position: absolute;
+
+    bottom: 17px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    display: grid;
+
+    grid-template-columns:
+        38px
+        auto
+        38px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color:
+        rgba(230,202,126,.65);
+
+    font-size: 9px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+
+.rotation-controls button {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,.38);
+
+    color:
+        #EDCE70;
+
+    background:
+        rgba(8,4,17,.64);
+
+    font-size: 23px;
+
+    cursor: pointer;
+}
+
+
+.camera-controls {
+    position: absolute;
+
+    top: 14px;
+    right: 14px;
+
+    display: flex;
+
+    gap: 5px;
+}
+
+
+.camera-button {
+    min-width: 52px;
+    height: 29px;
+
+    border-radius: 7px;
+
+    border:
+        1px
+        solid
+        rgba(212,175,55,.20);
+
+    color:
+        rgba(232,201,112,.48);
+
+    background:
+        rgba(7,4,14,.52);
+
+    font-size: 8px;
+
+    font-weight: 900;
+
+    cursor: pointer;
+}
+
+
+.camera-button.active {
+    color:
+        #EDCE70;
+
+    border-color:
+        rgba(196,69,255,.68);
+
+    background:
+        rgba(177,46,255,.09);
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.appearance-actions {
+    flex: 0 0 auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap:
+        clamp(18px, 1.8vw, 30px);
+
+    margin-top: 12px;
+}
+
+
+/* =========================================================
+   REVIEW
+   ========================================================= */
+
+.review-step {
+    text-align: center;
+}
+
+
+.review-step h2 {
+    margin:
+        0
+        0
+        10px;
+
+    color:
+        var(--gold-light);
+
+    font-family:
+        "Bungee Inline",
+        sans-serif;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   SMALLER SCREENS
+   ========================================================= */
+
+@media (max-width: 1400px) {
+
+    .appearance-layout {
+        grid-template-columns:
+            minmax(380px, 1.2fr)
+            minmax(260px, .8fr);
+
+        gap: 20px;
+    }
+
+
+    .appearance-step {
+        padding-left: 25px;
+        padding-right: 25px;
+    }
+
+
+    .face-feature-row {
+        grid-template-columns:
+            130px
+            1fr
+            40px;
+    }
+
+}
+
+
+@media (max-height: 760px) {
+
+    .appearance-tabs {
+        margin-bottom: 8px;
+    }
+
+
+    .appearance-editor {
+        padding: 11px;
+    }
+
+
+    .option-row {
+        min-height: 43px;
+    }
+
+
+    .range-option,
+    .detail-slider {
+        padding-top: 9px;
+    }
+
+
+    .face-feature-row {
+        min-height: 34px;
+    }
+
+
+    .appearance-actions {
+        margin-top: 7px;
+    }
+
+}
+
+
+/* =========================================================
+   STEP 03 - TRUE GTA PED PREVIEW WINDOW
+   ========================================================= */
+
+/*
+    During APPEARANCE, the full-screen NUI backdrop must
+    become transparent so the scripted GTA camera can be seen.
+*/
+
+.app.appearance-live {
+    background: transparent !important;
+}
+
+
+/*
+    The main panel can no longer be one giant opaque sheet,
+    otherwise it covers the GTA camera.
+*/
+
+.app.appearance-live .creator-panel {
+    background: transparent !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.05) !important;
+}
+
+
+/*
+    Remove the inner full-panel overlay while live preview
+    is active.
+*/
+
+.app.appearance-live .creator-panel::before {
+    background: transparent !important;
+}
+
+
+/*
+    Header remains visually solid.
+*/
+
+.app.appearance-live .creator-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(18,10,31,.93),
+            rgba(12,7,22,.87)
+        );
+
+    border-radius:
+        22px
+        22px
+        0
+        0;
+}
+
+
+/*
+    Left editor remains dark glass.
+*/
+
+.app.appearance-live .appearance-editor {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28,18,43,.94),
+            rgba(8,4,17,.96)
+        ) !important;
+
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+
+/*
+    LIVE PED WINDOW:
+    absolutely transparent center.
+*/
+
+.app.appearance-live .live-ped-stage {
+    background: transparent !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    border:
+        2px
+        solid
+        rgba(197,69,255,.92) !important;
+
+    box-shadow:
+        0 0 7px rgba(201,75,255,.70),
+        0 0 27px rgba(177,46,255,.26),
+        inset 0 0 18px rgba(177,46,255,.035) !important;
+}
+
+
+/*
+    Disable the purple fill/glow pseudo-layer that can cover
+    the actual GTA render.
+*/
+
+.app.appearance-live .live-ped-stage::before {
+    background: transparent !important;
+}
+
+
+/*
+    Footer stays solid enough to remain readable.
+*/
+
+.app.appearance-live .creator-footer {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10,5,18,.88),
+            rgba(6,3,12,.96)
+        ) !important;
+}
+
+
+/*
+    Appearance action buttons need their own dark surface
+    because the center panel is now transparent.
+*/
+
+.app.appearance-live .appearance-actions {
+    padding:
+        8px
+        16px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(10,5,18,.82);
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+
+/*
+    Hide decorative reflections during live GTA render.
+*/
+
+.app.appearance-live .glass-reflection {
+    display: none !important;
+}
+
+
+/*
+    Dot canvas can darken the GTA camera as well.
+*/
+
+.app.appearance-live #dotCanvas {
+    opacity: 0.18;
+}
+
+
+/* =========================================================
+   TRUE TRANSPARENT LIVE PREVIEW WINDOW
+   ========================================================= */
+
+/*
+    APPEARANCE aşamasında GTA render'ının üstünü
+    kapatabilecek bütün parent katmanları transparanlaştır.
+*/
+
+.app.appearance-live {
+    background: transparent !important;
+}
+
+
+.app.appearance-live .creator-panel {
+    background: transparent !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+
+.app.appearance-live .creator-panel::before,
+.app.appearance-live .creator-panel::after {
+    display: none !important;
+}
+
+
+.app.appearance-live .creator-content,
+.app.appearance-live .appearance-step,
+.app.appearance-live .appearance-layout {
+    background: transparent !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+
+/*
+    Soldaki editor kendi koyu yüzeyini korusun.
+*/
+
+.app.appearance-live .appearance-editor {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 20, 45, .96),
+            rgba(8, 4, 17, .97)
+        ) !important;
+
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+}
+
+
+/*
+    Header kendi koyu yüzeyini korusun.
+*/
+
+.app.appearance-live .creator-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(20, 12, 33, .96),
+            rgba(11, 6, 20, .94)
+        ) !important;
+}
+
+
+/*
+    Sağdaki LIVE PREVIEW penceresinin içi
+    %100 TRANSPARENT.
+*/
+
+.app.appearance-live .live-ped-stage {
+    background: transparent !important;
+
+    background-color: transparent !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+
+    overflow: hidden !important;
+
+    border:
+        2px
+        solid
+        rgba(197, 69, 255, .96) !important;
+
+    box-shadow:
+        0 0 7px rgba(201, 75, 255, .85),
+        0 0 26px rgba(177, 46, 255, .30) !important;
+}
+
+
+.app.appearance-live .live-ped-stage::before,
+.app.appearance-live .live-ped-stage::after {
+    display: none !important;
+}
+
+
+/*
+    HTML'de bulunan ekstra border katmanı
+    kesinlikle preview'ı kapatmasın.
+*/
+
+.app.appearance-live .live-stage-border {
+    position: absolute !important;
+
+    inset: 0 !important;
+
+    background: transparent !important;
+
+    background-color: transparent !important;
+
+    border: 0 !important;
+
+    box-shadow: none !important;
+
+    pointer-events: none !important;
+}
+
+
+/*
+    Preview üstündeki yazılar/kontroller
+    GTA pedinin üzerinde render edilmeye devam etsin.
+*/
+
+.app.appearance-live .live-stage-label,
+.app.appearance-live .rotation-controls,
+.app.appearance-live .camera-controls {
+    z-index: 20 !important;
+}
+
+
+/*
+    Alttaki BACK / CONTINUE kendi koyu yüzeyinde.
+*/
+
+.app.appearance-live .appearance-actions {
+    position: relative;
+
+    z-index: 20;
+
+    padding: 8px 18px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(9, 5, 17, .92) !important;
+}
+
+
+/*
+    Footer da okunabilir kalacak.
+*/
+
+.app.appearance-live .creator-footer {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 5, 18, .94),
+            rgba(6, 3, 12, .98)
+        ) !important;
+}
+
+
+.app.appearance-live .glass-reflection {
+    display: none !important;
+}

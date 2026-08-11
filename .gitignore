@@ -1,0 +1,12 @@
+# Claude Code local settings
+.claude/
+
+# Server-side backups
+*.bak
+*.bak.*
+*.before_*
+
+# OS / editor
+Thumbs.db
+.DS_Store
+*.swp

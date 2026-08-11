@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Bitirim Character Creator</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+<body>
+
+<div
+    id="app"
+    class="app hidden"
+>
+
+    <!--
+        Corner dot decorations.
+        Canvas kullanıyoruz çünkü kare CSS grid istemiyoruz.
+    -->
+
+    <canvas id="dotCanvas"></canvas>
+
+
+    <!-- ==================================================
+         MAIN 75% PANEL
+         ================================================== -->
+
+    <main class="creator-panel">
+
+
+        <!-- subtle panel reflections -->
+
+        <div class="glass-reflection reflection-left"></div>
+        <div class="glass-reflection reflection-right"></div>
+
+
+        <!-- ==================================================
+             HEADER
+             ================================================== -->
+
+        <header class="creator-header">
+
+            <div class="header-row">
+
+                <!-- LEFT LINE + > -->
+
+                <div class="header-side">
+
+                    <div class="header-line"></div>
+
+                    <div class="header-arrow arrow-right"></div>
+
+                </div>
+
+
+                <!-- TITLE BOX -->
+
+                <div class="header-title-box">
+
+                    <h1 id="pageTitle">
+                        CREATE CHARACTER
+                    </h1>
+
+                </div>
+
+
+                <!-- < + RIGHT LINE -->
+
+                <div class="header-side">
+
+                    <div class="header-arrow arrow-left"></div>
+
+                    <div class="header-line"></div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ==================================================
+             STEP 1
+             ================================================== -->
+
+        <section
+            id="stepGender"
+            class="creator-content"
+        >
+
+            <div class="step-counter">
+
+                <span class="step-current">
+                    01
+                </span>
+
+                <span class="step-divider">
+                    /
+                </span>
+
+                <span>
+                    04
+                </span>
+
+            </div>
+
+
+            <div class="intro">
+
+                <h2>
+                    CREATE YOUR NEW CHARACTER
+                </h2>
+
+                <p>
+                    Choose your character's gender to begin your journey.
+                </p>
+
+            </div>
+
+
+            <!-- ==================================================
+                 GENDER CARDS
+                 ================================================== -->
+
+            <div class="gender-grid">
+
+
+                <!-- FEMALE -->
+
+                <button
+                    class="gender-card"
+                    data-gender="female"
+                    type="button"
+                >
+
+                    <div class="selection-light"></div>
+
+
+                    <div class="portrait-ring">
+
+                        <svg
+                            class="portrait"
+                            viewBox="0 0 240 240"
+                            aria-hidden="true"
+                        >
+
+                            <circle
+                                class="portrait-background"
+                                cx="120"
+                                cy="120"
+                                r="105"
+                            />
+
+
+                            <!-- back hair -->
+
+                            <path
+                                class="hair"
+                                d="
+                                    M59 116
+                                    C57 69 78 36 116 30
+                                    C156 25 182 54 179 111
+                                    L184 161
+                                    C171 182 149 194 120 195
+                                    C91 194 68 182 55 161
+                                    Z
+                                "
+                            />
+
+
+                            <!-- neck -->
+
+                            <path
+                                class="skin skin-shadow"
+                                d="
+                                    M99 146
+                                    L141 146
+                                    L146 177
+                                    L94 177
+                                    Z
+                                "
+                            />
+
+
+                            <!-- face -->
+
+                            <ellipse
+                                class="skin"
+                                cx="120"
+                                cy="111"
+                                rx="49"
+                                ry="61"
+                            />
+
+
+                            <!-- front hair -->
+
+                            <path
+                                class="hair"
+                                d="
+                                    M70 101
+                                    C76 57 95 42 120 42
+                                    C151 42 169 64 168 96
+                                    C148 87 135 72 124 55
+                                    C110 77 94 93 70 101
+                                    Z
+                                "
+                            />
+
+
+                            <!-- body -->
+
+                            <path
+                                class="clothing"
+                                d="
+                                    M48 225
+                                    C53 188 75 169 98 162
+                                    C104 173 111 180 120 185
+                                    C129 180 136 173 142 162
+                                    C165 169 187 188 192 225
+                                    Z
+                                "
+                            />
+
+
+                            <!-- collar -->
+
+                            <path
+                                class="collar"
+                                d="
+                                    M96 164
+                                    L120 185
+                                    L144 164
+                                    L138 195
+                                    L120 185
+                                    L102 195
+                                    Z
+                                "
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <span class="gender-title">
+                        FEMALE
+                    </span>
+
+                    <span class="selected-label">
+                        SELECTED
+                    </span>
+
+                </button>
+
+
+                <!-- MALE -->
+
+                <button
+                    class="gender-card"
+                    data-gender="male"
+                    type="button"
+                >
+
+                    <div class="selection-light"></div>
+
+
+                    <div class="portrait-ring">
+
+                        <svg
+                            class="portrait"
+                            viewBox="0 0 240 240"
+                            aria-hidden="true"
+                        >
+
+                            <circle
+                                class="portrait-background"
+                                cx="120"
+                                cy="120"
+                                r="105"
+                            />
+
+
+                            <!-- hair -->
+
+                            <path
+                                class="hair"
+                                d="
+                                    M69 103
+                                    C66 61 87 34 119 32
+                                    C157 29 178 52 172 104
+                                    L159 78
+                                    C143 82 120 70 103 54
+                                    C94 74 82 91 69 103
+                                    Z
+                                "
+                            />
+
+
+                            <!-- neck -->
+
+                            <path
+                                class="skin skin-shadow"
+                                d="
+                                    M100 148
+                                    L140 148
+                                    L145 174
+                                    L95 174
+                                    Z
+                                "
+                            />
+
+
+                            <!-- face -->
+
+                            <ellipse
+                                class="skin"
+                                cx="120"
+                                cy="111"
+                                rx="49"
+                                ry="61"
+                            />
+
+
+                            <!-- jacket -->
+
+                            <path
+                                class="male-jacket"
+                                d="
+                                    M45 225
+                                    C53 187 76 170 100 163
+                                    L120 184
+                                    L140 163
+                                    C164 170 187 187 195 225
+                                    Z
+                                "
+                            />
+
+
+                            <!-- shirt -->
+
+                            <path
+                                class="male-shirt"
+                                d="
+                                    M99 163
+                                    L120 184
+                                    L141 163
+                                    L136 225
+                                    L104 225
+                                    Z
+                                "
+                            />
+
+
+                            <!-- tie -->
+
+                            <path
+                                class="tie"
+                                d="
+                                    M115 184
+                                    L125 184
+                                    L130 225
+                                    L110 225
+                                    Z
+                                "
+                            />
+
+                        </svg>
+
+                    </div>
+
+
+                    <span class="gender-title">
+                        MALE
+                    </span>
+
+                    <span class="selected-label">
+                        SELECTED
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <!-- ==================================================
+                 CONTINUE
+                 ================================================== -->
+
+            <button
+                id="continueButton"
+                class="continue-button"
+                type="button"
+                disabled
+            >
+
+                <span>
+                    CONTINUE
+                </span>
+
+                <span class="continue-arrow">
+                    ›
+                </span>
+
+            </button>
+
+        </section>
+
+
+        <!-- ==================================================
+             STEP 2 PLACEHOLDER
+             ================================================== -->
+
+        <section
+            id="stepIdentity"
+            class="creator-content identity-step hidden"
+        >
+
+            <div class="step-counter">
+
+                <span class="step-current">
+                    02
+                </span>
+
+                <span class="step-divider">
+                    /
+                </span>
+
+                <span>
+                    04
+                </span>
+
+            </div>
+
+
+            <div class="intro identity-intro">
+
+                <h2>
+                    DEFINE YOUR IDENTITY
+                </h2>
+
+                <p>
+                    Choose the name your character will be known by.
+                </p>
+
+            </div>
+
+
+            <div class="identity-form">
+
+                <div class="identity-field">
+
+                    <label for="firstName">
+                        FIRST NAME
+                    </label>
+
+                    <div class="input-shell">
+
+                        <input
+                            id="firstName"
+                            type="text"
+                            maxlength="20"
+                            autocomplete="off"
+                            spellcheck="false"
+                            placeholder="Arthur"
+                        >
+
+                        <span class="input-status"></span>
+
+                    </div>
+
+                    <span
+                        id="firstNameError"
+                        class="field-error"
+                    ></span>
+
+                </div>
+
+
+                <div class="identity-field">
+
+                    <label for="lastName">
+                        LAST NAME
+                    </label>
+
+                    <div class="input-shell">
+
+                        <input
+                            id="lastName"
+                            type="text"
+                            maxlength="20"
+                            autocomplete="off"
+                            spellcheck="false"
+                            placeholder="Russo"
+                        >
+
+                        <span class="input-status"></span>
+
+                    </div>
+
+                    <span
+                        id="lastNameError"
+                        class="field-error"
+                    ></span>
+
+                </div>
+
+            </div>
+
+
+            <div class="identity-actions">
+
+                <button
+                    id="identityBack"
+                    class="secondary-button"
+                    type="button"
+                >
+                    <span>‹</span>
+                    BACK
+                </button>
+
+
+                <button
+                    id="identityContinue"
+                    class="continue-button identity-continue"
+                    type="button"
+                    disabled
+                >
+                    CONTINUE
+                    <span class="continue-arrow">›</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section
+            id="stepAppearance"
+            class="creator-content appearance-step hidden"
+        >
+
+            <div class="step-counter">
+                <span class="step-current">03</span>
+                <span class="step-divider">/</span>
+                <span>04</span>
+            </div>
+
+
+            <div class="appearance-layout">
+
+
+                <!-- =========================================
+                     LEFT EDITOR
+                     ========================================= -->
+
+                <div class="appearance-editor">
+
+                    <div class="appearance-tabs">
+
+                        <button
+                            class="appearance-tab active"
+                            data-tab="heritage"
+                            type="button"
+                        >
+                            HERITAGE
+                        </button>
+
+                        <button
+                            class="appearance-tab"
+                            data-tab="face"
+                            type="button"
+                        >
+                            FACE
+                        </button>
+
+                        <button
+                            class="appearance-tab"
+                            data-tab="details"
+                            type="button"
+                        >
+                            DETAILS
+                        </button>
+
+                    </div>
+
+
+                    <!-- HERITAGE -->
+
+                    <div
+                        id="appearanceHeritage"
+                        class="appearance-page active"
+                    >
+
+                        <div class="appearance-heading">
+
+                            <h2>
+                                HERITAGE
+                            </h2>
+
+                            <p>
+                                Blend two parents to define your character's genetic features.
+                            </p>
+
+                        </div>
+
+
+                        <div class="option-row">
+
+                            <span class="option-label">
+                                MOTHER
+                            </span>
+
+                            <div class="option-selector">
+
+                                <button
+                                    id="motherPrev"
+                                    type="button"
+                                >
+                                    ‹
+                                </button>
+
+                                <span id="motherValue">
+                                    MOTHER 01
+                                </span>
+
+                                <button
+                                    id="motherNext"
+                                    type="button"
+                                >
+                                    ›
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="option-row">
+
+                            <span class="option-label">
+                                FATHER
+                            </span>
+
+                            <div class="option-selector">
+
+                                <button
+                                    id="fatherPrev"
+                                    type="button"
+                                >
+                                    ‹
+                                </button>
+
+                                <span id="fatherValue">
+                                    FATHER 01
+                                </span>
+
+                                <button
+                                    id="fatherNext"
+                                    type="button"
+                                >
+                                    ›
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="range-option">
+
+                            <div class="range-header">
+
+                                <span>
+                                    RESEMBLANCE
+                                </span>
+
+                                <span id="resemblanceValue">
+                                    50%
+                                </span>
+
+                            </div>
+
+                            <input
+                                id="resemblance"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="50"
+                            >
+
+                            <div class="range-ends">
+                                <span>FATHER</span>
+                                <span>MOTHER</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="range-option">
+
+                            <div class="range-header">
+
+                                <span>
+                                    SKIN TONE
+                                </span>
+
+                                <span id="skinMixValue">
+                                    50%
+                                </span>
+
+                            </div>
+
+                            <input
+                                id="skinMix"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="50"
+                            >
+
+                            <div class="range-ends">
+                                <span>FATHER</span>
+                                <span>MOTHER</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FACE -->
+
+                    <div
+                        id="appearanceFace"
+                        class="appearance-page"
+                    >
+
+                        <div class="appearance-heading">
+
+                            <h2>
+                                FACE
+                            </h2>
+
+                            <p>
+                                Fine-tune the structure of your character's face.
+                            </p>
+
+                        </div>
+
+
+                        <div
+                            id="faceFeatureList"
+                            class="face-feature-list"
+                        ></div>
+
+                    </div>
+
+
+                    <!-- DETAILS -->
+
+                    <div
+                        id="appearanceDetails"
+                        class="appearance-page"
+                    >
+
+                        <div class="appearance-heading">
+
+                            <h2>
+                                DETAILS
+                            </h2>
+
+                            <p>
+                                Add subtle natural details to make your character unique.
+                            </p>
+
+                        </div>
+
+
+                        <div class="option-row">
+
+                            <span class="option-label">
+                                EYE COLOR
+                            </span>
+
+                            <div class="option-selector">
+
+                                <button
+                                    id="eyePrev"
+                                    type="button"
+                                >
+                                    ‹
+                                </button>
+
+                                <span id="eyeValue">
+                                    BROWN
+                                </span>
+
+                                <button
+                                    id="eyeNext"
+                                    type="button"
+                                >
+                                    ›
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="detail-slider">
+
+                            <div class="range-header">
+                                <span>AGING</span>
+                                <span id="ageingText">NONE</span>
+                            </div>
+
+                            <input
+                                id="ageing"
+                                type="range"
+                                min="-1"
+                                max="9"
+                                step="1"
+                                value="-1"
+                            >
+
+                        </div>
+
+
+                        <div class="detail-slider">
+
+                            <div class="range-header">
+                                <span>COMPLEXION</span>
+                                <span id="complexionText">NONE</span>
+                            </div>
+
+                            <input
+                                id="complexion"
+                                type="range"
+                                min="-1"
+                                max="9"
+                                step="1"
+                                value="-1"
+                            >
+
+                        </div>
+
+
+                        <div class="detail-slider">
+
+                            <div class="range-header">
+                                <span>MOLES & FRECKLES</span>
+                                <span id="molesText">NONE</span>
+                            </div>
+
+                            <input
+                                id="moles"
+                                type="range"
+                                min="-1"
+                                max="9"
+                                step="1"
+                                value="-1"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TOOLS -->
+
+                    <div class="appearance-tools">
+
+                        <button
+                            id="randomizeAppearance"
+                            class="appearance-tool-button"
+                            type="button"
+                        >
+                            RANDOMIZE FACE
+                        </button>
+
+                        <button
+                            id="resetAppearance"
+                            class="appearance-tool-button"
+                            type="button"
+                        >
+                            RESET
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =========================================
+                     LIVE PED AREA
+                     ========================================= -->
+
+                <div class="live-ped-stage">
+
+                    <div class="live-stage-border"></div>
+
+
+                    <div class="live-stage-label">
+
+                        <span class="live-dot"></span>
+
+                        LIVE PREVIEW
+
+                    </div>
+
+
+                    <div class="rotation-controls">
+
+                        <button
+                            id="rotateLeft"
+                            type="button"
+                        >
+                            ‹
+                        </button>
+
+                        <span>
+                            ROTATE
+                        </span>
+
+                        <button
+                            id="rotateRight"
+                            type="button"
+                        >
+                            ›
+                        </button>
+
+                    </div>
+
+
+                    <div class="camera-controls">
+
+                        <button
+                            id="cameraFace"
+                            class="camera-button active"
+                            type="button"
+                        >
+                            FACE
+                        </button>
+
+                        <button
+                            id="cameraBody"
+                            class="camera-button"
+                            type="button"
+                        >
+                            BODY
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="appearance-actions">
+
+                <button
+                    id="appearanceBack"
+                    class="secondary-button"
+                    type="button"
+                >
+                    <span>‹</span>
+                    BACK
+                </button>
+
+
+                <button
+                    id="appearanceContinue"
+                    class="continue-button identity-continue"
+                    type="button"
+                >
+                    CONTINUE
+                    <span class="continue-arrow">›</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ===============================================
+             STEP 4 PLACEHOLDER
+             =============================================== -->
+
+        <section
+            id="stepReview"
+            class="creator-content review-step hidden"
+        >
+
+            <div class="step-counter">
+
+                <span class="step-current">
+                    04
+                </span>
+
+                <span class="step-divider">
+                    /
+                </span>
+
+                <span>
+                    04
+                </span>
+
+            </div>
+
+
+            <div class="identity-icon">
+
+                <svg viewBox="0 0 80 80">
+
+                    <path
+                        d="
+                            M18 41
+                            L33 56
+                            L63 24
+                        "
+                    />
+
+                </svg>
+
+            </div>
+
+
+            <h2>
+                REVIEW
+            </h2>
+
+            <p>
+                Your character is ready for final review.
+                Final character creation will be connected here next.
+            </p>
+
+
+            <div
+                id="reviewSummary"
+                class="selected-gender-result"
+            ></div>
+
+        </section>
+
+
+        <!-- ==================================================
+             FOOTER
+             ================================================== -->
+
+        <footer class="creator-footer">
+
+            <div class="footer-decoration">
+
+                <span class="footer-wing"></span>
+
+                <span class="footer-light"></span>
+
+                <span class="footer-wing"></span>
+
+            </div>
+
+
+            <div class="footer-controls">
+
+                <span>
+                    SELECT:
+                    <strong>[ENTER]</strong>
+                </span>
+
+                <span class="footer-separator"></span>
+
+                <span>
+                    BACK:
+                    <strong>[ESC]</strong>
+                </span>
+
+            </div>
+
+        </footer>
+
+    </main>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
