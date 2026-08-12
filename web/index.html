@@ -519,6 +519,7 @@
 
                 </div>
 
+
             </div>
 
 
@@ -924,29 +925,6 @@
                     </div>
 
 
-                    <div class="rotation-controls">
-
-                        <button
-                            id="rotateLeft"
-                            type="button"
-                        >
-                            ‹
-                        </button>
-
-                        <span>
-                            ROTATE
-                        </span>
-
-                        <button
-                            id="rotateRight"
-                            type="button"
-                        >
-                            ›
-                        </button>
-
-                    </div>
-
-
                     <div class="camera-controls">
 
                         <button
@@ -1046,8 +1024,7 @@
             </h2>
 
             <p>
-                Your character is ready for final review.
-                Final character creation will be connected here next.
+                Your character is ready. Confirm to create it and enter the world.
             </p>
 
 
@@ -1055,6 +1032,35 @@
                 id="reviewSummary"
                 class="selected-gender-result"
             ></div>
+
+            <span
+                id="finishError"
+                class="field-error"
+            ></span>
+
+
+            <div class="identity-actions">
+
+                <button
+                    id="reviewBack"
+                    class="secondary-button"
+                    type="button"
+                >
+                    <span>‹</span>
+                    BACK
+                </button>
+
+
+                <button
+                    id="finishButton"
+                    class="continue-button identity-continue"
+                    type="button"
+                >
+                    FINISH
+                    <span class="continue-arrow">›</span>
+                </button>
+
+            </div>
 
         </section>
 

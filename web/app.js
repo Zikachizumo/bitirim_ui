@@ -39,6 +39,16 @@ const identityBack =
     document.getElementById('identityBack');
 
 
+const finishButton =
+    document.getElementById('finishButton');
+
+const reviewBack =
+    document.getElementById('reviewBack');
+
+const finishError =
+    document.getElementById('finishError');
+
+
 const genderCards =
     Array.from(
         document.querySelectorAll('.gender-card')
@@ -89,6 +99,8 @@ const EYE_COLORS = [
     'BLUE',
     'LIGHT BLUE'
 ];
+
+
 
 
 function defaultAppearance() {
@@ -156,7 +168,9 @@ function postNui(endpoint, data = {}) {
             body:
                 JSON.stringify(data)
         }
-    ).catch(() => {});
+    )
+        .then(response => response.json())
+        .catch(() => null);
 
 }
 
@@ -1209,44 +1223,6 @@ document.getElementById(
 
 
 /* =========================================================
-   ROTATION
-   ========================================================= */
-
-document.getElementById(
-    'rotateLeft'
-).addEventListener(
-    'click',
-    () => {
-
-        postNui(
-            'appearanceRotate',
-            {
-                direction: -1
-            }
-        );
-
-    }
-);
-
-
-document.getElementById(
-    'rotateRight'
-).addEventListener(
-    'click',
-    () => {
-
-        postNui(
-            'appearanceRotate',
-            {
-                direction: 1
-            }
-        );
-
-    }
-);
-
-
-/* =========================================================
    CAMERA
    ========================================================= */
 
@@ -1430,6 +1406,89 @@ identityBack.addEventListener(
 
 
 /* =========================================================
+   REVIEW / FINISH
+   ========================================================= */
+
+function finishErrorMessage(error) {
+
+    switch (error) {
+
+        case 'create_failed':
+            return 'Could not create the character. Check your details and try again.';
+
+        case 'load_failed':
+            return 'Character created, but entering the world failed. Press FINISH to retry.';
+
+        case 'incomplete':
+            return 'Some details are missing. Go back and complete every step.';
+
+        default:
+            return 'Something went wrong. Please try again.';
+
+    }
+
+}
+
+
+// Set once createCharacter has already succeeded server-side but the
+// spawn handoff failed. While set, FINISH only retries the handoff
+// instead of creating another character.
+let pendingSpawnCitizenId = null;
+
+
+reviewBack.addEventListener(
+    'click',
+    () => postNui('back')
+);
+
+
+finishButton.addEventListener(
+    'click',
+    () => {
+
+        finishButton.disabled = true;
+        finishError.textContent = '';
+
+        const request =
+            pendingSpawnCitizenId
+                ? postNui(
+                    'retrySpawnHandoff',
+                    { citizenId: pendingSpawnCitizenId }
+                )
+                : postNui('finishCreation');
+
+        request.then(
+            response => {
+
+                if (response && response.ok) {
+                    pendingSpawnCitizenId = null;
+                    return;
+                }
+
+                if (
+                    response &&
+                    response.error === 'load_failed' &&
+                    response.citizenId
+                ) {
+                    pendingSpawnCitizenId =
+                        response.citizenId;
+                }
+
+                finishButton.disabled = false;
+
+                finishError.textContent =
+                    finishErrorMessage(
+                        response && response.error
+                    );
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
    RENDER STEPS
    ========================================================= */
 
@@ -1460,8 +1519,10 @@ function renderStep() {
 
     app.classList.toggle(
         'appearance-live',
-        state.step >= 3
+        state.step === 3
     );
+
+    drawDots();
 
 
     if (state.step === 1) {
@@ -1522,6 +1583,12 @@ function renderStep() {
             'heritage'
         );
 
+        // The earlier drawDots() call above ran while this step's
+        // content was still display:none, so .live-ped-stage had a
+        // zero-size rect and the layout flood skipped itself. Redraw
+        // now that the step is actually visible and laid out.
+        drawDots();
+
         return;
     }
 
@@ -1543,6 +1610,9 @@ function renderStep() {
     ).textContent =
         `${state.firstName} ${state.lastName} • ${genderText}`;
 
+    finishError.textContent = '';
+    finishButton.disabled = false;
+
 }
 
 
@@ -1561,9 +1631,13 @@ window.addEventListener(
 
         if (event.key === 'Escape') {
 
-            event.preventDefault();
+            // Disabled: backing out mid-creation left the player
+            // stuck with no character and no NUI, which combined
+            // with spawnmanager's default autospawn produced a
+            // stray, unconfigured ped. Character creation cannot
+            // be cancelled once started.
 
-            postNui('back');
+            event.preventDefault();
 
             return;
         }
@@ -1714,7 +1788,9 @@ window.addEventListener(
                     { direction: 1 }
                 );
 
+                return;
             }
+
 
         }
 
@@ -2043,6 +2119,196 @@ function drawCornerDots(
 }
 
 
+function drawPanelFlood() {
+
+    const panel =
+        document.querySelector(
+            '.creator-panel'
+        );
+
+    if (!panel) {
+        return;
+    }
+
+    const rect =
+        panel.getBoundingClientRect();
+
+    if (!rect.width || !rect.height) {
+        return;
+    }
+
+    const radius =
+        parseFloat(
+            getComputedStyle(panel).borderRadius
+        ) ||
+        24;
+
+    const backgroundColor =
+        getComputedStyle(
+            document.documentElement
+        )
+            .getPropertyValue('--background')
+            .trim() ||
+        '#19023A';
+
+    ctx.save();
+
+    ctx.beginPath();
+
+    ctx.rect(
+        0,
+        0,
+        window.innerWidth,
+        window.innerHeight
+    );
+
+    if (ctx.roundRect) {
+
+        ctx.roundRect(
+            rect.left,
+            rect.top,
+            rect.width,
+            rect.height,
+            radius
+        );
+
+    } else {
+
+        ctx.rect(
+            rect.left,
+            rect.top,
+            rect.width,
+            rect.height
+        );
+
+    }
+
+    ctx.fillStyle =
+        backgroundColor;
+
+    ctx.fill('evenodd');
+
+    ctx.restore();
+
+}
+
+
+function drawAppearanceLayoutFlood() {
+
+    const panel =
+        document.querySelector(
+            '.creator-panel'
+        );
+
+    const content =
+        document.querySelector(
+            '.creator-content.appearance-step'
+        );
+
+    const liveStage =
+        document.querySelector(
+            '.live-ped-stage'
+        );
+
+    if (!panel || !content || !liveStage) {
+        return;
+    }
+
+    const panelRect =
+        panel.getBoundingClientRect();
+
+    const contentRect =
+        content.getBoundingClientRect();
+
+    const stageRect =
+        liveStage.getBoundingClientRect();
+
+    if (
+        !panelRect.width ||
+        !panelRect.height ||
+        !contentRect.width ||
+        !contentRect.height
+    ) {
+        return;
+    }
+
+    const rootStyle =
+        getComputedStyle(
+            document.documentElement
+        );
+
+    const panelLight =
+        rootStyle.getPropertyValue('--panel-light').trim() ||
+        'rgba(55,42,75,0.68)';
+
+    const panelDeep =
+        rootStyle.getPropertyValue('--panel-deep').trim() ||
+        'rgba(8,5,18,0.97)';
+
+    // Same 135deg gradient .creator-panel itself uses, anchored to
+    // the FULL panel's bounds (not just this smaller content box) --
+    // otherwise the falloff from light to dark happens much faster
+    // across the narrower content area, and the top strip right
+    // under the header (where the step counter sits) reads as
+    // near-black instead of the panel's actual light top tone. This
+    // keeps the gutters between/around the editor and live-preview
+    // boxes reading as one continuous panel, matching steps 1/2/4 --
+    // only .live-ped-stage stays a real hole (it's on the required
+    // transparent ancestor chain for the live game to show).
+    const gradient =
+        ctx.createLinearGradient(
+            panelRect.left,
+            panelRect.top,
+            panelRect.right,
+            panelRect.bottom
+        );
+
+    gradient.addColorStop(0, panelLight);
+    gradient.addColorStop(0.36, 'rgba(20,13,34,0.94)');
+    gradient.addColorStop(1, panelDeep);
+
+    ctx.save();
+
+    ctx.beginPath();
+
+    ctx.rect(
+        contentRect.left,
+        contentRect.top,
+        contentRect.width,
+        contentRect.height
+    );
+
+    if (ctx.roundRect) {
+
+        ctx.roundRect(
+            stageRect.left,
+            stageRect.top,
+            stageRect.width,
+            stageRect.height,
+            19
+        );
+
+    } else {
+
+        ctx.rect(
+            stageRect.left,
+            stageRect.top,
+            stageRect.width,
+            stageRect.height
+        );
+
+    }
+
+    ctx.fillStyle =
+        gradient;
+
+    ctx.fill('evenodd');
+
+    ctx.restore();
+
+}
+
+
 function drawDots() {
 
     const dpr =
@@ -2082,6 +2348,22 @@ function drawDots() {
         window.innerWidth,
         window.innerHeight
     );
+
+    // Steps 1/2/4 rely on #app's own opaque background to sit
+    // behind these dots. Step 3 makes #app transparent instead
+    // (so .live-ped-stage can reveal the live game), so the
+    // margins need their own opaque fill drawn here, below the
+    // dots, with a hole left open over the panel -- everything
+    // inside the panel controls its own background already.
+
+    if (
+        app.classList.contains('appearance-live')
+    ) {
+
+        drawPanelFlood();
+        drawAppearanceLayoutFlood();
+
+    }
 
     drawCornerDots(
         -window.innerWidth * 0.035,

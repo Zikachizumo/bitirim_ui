@@ -1657,23 +1657,9 @@ button {
 
 /* =========================================================
    APPEARANCE - LIVE GTA PED MODE
+   Consolidated rules live further down, under
+   "STEP 03 - TRUE GTA PED PREVIEW WINDOW".
    ========================================================= */
-
-.app.appearance-live {
-    background:
-        rgba(25, 2, 58, 0.68);
-}
-
-
-.app.appearance-live .creator-panel {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(52, 38, 70, 0.63),
-            rgba(17, 10, 29, 0.79) 38%,
-            rgba(7, 4, 15, 0.84) 100%
-        );
-}
 
 
 /* =========================================================
@@ -2307,68 +2293,14 @@ input[type="range"]::-webkit-slider-thumb {
 
 
 /* =========================================================
-   ROTATE / CAMERA
+   CAMERA
    ========================================================= */
-
-.rotation-controls {
-    position: absolute;
-
-    bottom: 17px;
-    left: 50%;
-
-    transform:
-        translateX(-50%);
-
-    display: grid;
-
-    grid-template-columns:
-        38px
-        auto
-        38px;
-
-    align-items: center;
-
-    gap: 8px;
-
-    color:
-        rgba(230,202,126,.65);
-
-    font-size: 9px;
-
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-
-.rotation-controls button {
-    width: 36px;
-    height: 36px;
-
-    border-radius: 50%;
-
-    border:
-        1px
-        solid
-        rgba(212,175,55,.38);
-
-    color:
-        #EDCE70;
-
-    background:
-        rgba(8,4,17,.64);
-
-    font-size: 23px;
-
-    cursor: pointer;
-}
-
 
 .camera-controls {
     position: absolute;
 
-    top: 14px;
-    right: 14px;
+    bottom: 17px;
+    left: 17px;
 
     display: flex;
 
@@ -2528,189 +2460,52 @@ input[type="range"]::-webkit-slider-thumb {
    ========================================================= */
 
 /*
-    During APPEARANCE, the full-screen NUI backdrop must
-    become transparent so the scripted GTA camera can be seen.
+    clip-path on #app (tried previously) never revealed the
+    game world in the live game, likely unsupported by FiveM's
+    NUI/CEF build -- reverted. A full-transparency pass (every
+    background in step 3 removed) was used to rule CSS out while
+    the ped was invisible -- that turned out to be a Lua-side bug
+    (wrong creator location, broken camera math, a blur timecycle
+    modifier), now fixed. Back to the real design: only #app and
+    the direct ancestor chain down to .live-ped-stage stay
+    transparent (that's the one true gap the live game shows
+    through); header, left editor, footer and the action buttons
+    repaint their own opaque surface on top so step 3 reads the
+    same as steps 1/2/4.
 */
 
 .app.appearance-live {
     background: transparent !important;
 }
 
-
-/*
-    The main panel can no longer be one giant opaque sheet,
-    otherwise it covers the GTA camera.
-*/
-
-.app.appearance-live .creator-panel {
-    background: transparent !important;
-
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-
-    box-shadow:
-        0 30px 100px rgba(0,0,0,.24),
-        inset 0 1px 0 rgba(255,255,255,.05) !important;
-}
-
-
-/*
-    Remove the inner full-panel overlay while live preview
-    is active.
-*/
-
-.app.appearance-live .creator-panel::before {
-    background: transparent !important;
-}
-
-
-/*
-    Header remains visually solid.
-*/
-
-.app.appearance-live .creator-header {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(18,10,31,.93),
-            rgba(12,7,22,.87)
-        );
-
-    border-radius:
-        22px
-        22px
-        0
-        0;
-}
-
-
-/*
-    Left editor remains dark glass.
-*/
-
-.app.appearance-live .appearance-editor {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(28,18,43,.94),
-            rgba(8,4,17,.96)
-        ) !important;
-
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-}
-
-
-/*
-    LIVE PED WINDOW:
-    absolutely transparent center.
-*/
-
-.app.appearance-live .live-ped-stage {
-    background: transparent !important;
-
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-
-    border:
-        2px
-        solid
-        rgba(197,69,255,.92) !important;
-
-    box-shadow:
-        0 0 7px rgba(201,75,255,.70),
-        0 0 27px rgba(177,46,255,.26),
-        inset 0 0 18px rgba(177,46,255,.035) !important;
-}
-
-
-/*
-    Disable the purple fill/glow pseudo-layer that can cover
-    the actual GTA render.
-*/
-
-.app.appearance-live .live-ped-stage::before {
-    background: transparent !important;
-}
-
-
-/*
-    Footer stays solid enough to remain readable.
-*/
-
-.app.appearance-live .creator-footer {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(10,5,18,.88),
-            rgba(6,3,12,.96)
-        ) !important;
-}
-
-
-/*
-    Appearance action buttons need their own dark surface
-    because the center panel is now transparent.
-*/
-
-.app.appearance-live .appearance-actions {
-    padding:
-        8px
-        16px;
-
-    border-radius: 13px;
-
-    background:
-        rgba(10,5,18,.82);
-
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-
-/*
-    Hide decorative reflections during live GTA render.
-*/
 
 .app.appearance-live .glass-reflection {
     display: none !important;
 }
 
 
-/*
-    Dot canvas can darken the GTA camera as well.
-*/
-
-.app.appearance-live #dotCanvas {
-    opacity: 0.18;
-}
-
-
-/* =========================================================
-   TRUE TRANSPARENT LIVE PREVIEW WINDOW
-   ========================================================= */
-
-/*
-    APPEARANCE aşamasında GTA render'ının üstünü
-    kapatabilecek bütün parent katmanları transparanlaştır.
-*/
-
-.app.appearance-live {
-    background: transparent !important;
-}
-
-
 .app.appearance-live .creator-panel {
     background: transparent !important;
 
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-}
 
+    /*
+        The panel itself has to stay transparent (it's on the
+        required ancestor chain down to .live-ped-stage -- #app
+        down to that box must ALL be transparent, or the box can
+        only ever reveal its nearest opaque ancestor's paint, not
+        the true live game behind everything). Everywhere outside
+        the panel still needs to look like steps 1/2/4 though, not
+        reveal the game -- #dotCanvas paints that flood itself (see
+        app.js drawDots), since it needs to sit BELOW the corner
+        dot decorations, not above them like a box-shadow on this
+        panel would.
+    */
 
-.app.appearance-live .creator-panel::before,
-.app.appearance-live .creator-panel::after {
-    display: none !important;
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.24),
+        inset 0 1px 0 rgba(255,255,255,.05) !important;
 }
 
 
@@ -2724,41 +2519,41 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 
-/*
-    Soldaki editor kendi koyu yüzeyini korusun.
-*/
+.app.appearance-live .creator-header {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(18,10,31,.93),
+            rgba(12,7,22,.87)
+        ) !important;
+
+    border-radius:
+        22px
+        22px
+        0
+        0;
+}
+
 
 .app.appearance-live .appearance-editor {
     background:
         linear-gradient(
             145deg,
-            rgba(30, 20, 45, .96),
-            rgba(8, 4, 17, .97)
+            rgba(28,18,43,.94),
+            rgba(8,4,17,.96)
         ) !important;
 
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
+    /*
+        No backdrop-filter here: FiveM's NUI/CEF renders it as
+        solid black over the whole live-ped-stage box instead of
+        blurring, even though this element and the box are just
+        siblings in a grid -- confirmed live (2026-08-12).
+    */
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
 }
 
-
-/*
-    Header kendi koyu yüzeyini korusun.
-*/
-
-.app.appearance-live .creator-header {
-    background:
-        linear-gradient(
-            180deg,
-            rgba(20, 12, 33, .96),
-            rgba(11, 6, 20, .94)
-        ) !important;
-}
-
-
-/*
-    Sağdaki LIVE PREVIEW penceresinin içi
-    %100 TRANSPARENT.
-*/
 
 .app.appearance-live .live-ped-stage {
     background: transparent !important;
@@ -2773,11 +2568,12 @@ input[type="range"]::-webkit-slider-thumb {
     border:
         2px
         solid
-        rgba(197, 69, 255, .96) !important;
+        rgba(197,69,255,.92) !important;
 
     box-shadow:
-        0 0 7px rgba(201, 75, 255, .85),
-        0 0 26px rgba(177, 46, 255, .30) !important;
+        0 0 7px rgba(201,75,255,.70),
+        0 0 27px rgba(177,46,255,.26),
+        inset 0 0 18px rgba(177,46,255,.035) !important;
 }
 
 
@@ -2786,11 +2582,6 @@ input[type="range"]::-webkit-slider-thumb {
     display: none !important;
 }
 
-
-/*
-    HTML'de bulunan ekstra border katmanı
-    kesinlikle preview'ı kapatmasın.
-*/
 
 .app.appearance-live .live-stage-border {
     position: absolute !important;
@@ -2809,21 +2600,13 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 
-/*
-    Preview üstündeki yazılar/kontroller
-    GTA pedinin üzerinde render edilmeye devam etsin.
-*/
-
 .app.appearance-live .live-stage-label,
-.app.appearance-live .rotation-controls,
 .app.appearance-live .camera-controls {
-    z-index: 20 !important;
+    position: relative;
+
+    z-index: 20;
 }
 
-
-/*
-    Alttaki BACK / CONTINUE kendi koyu yüzeyinde.
-*/
 
 .app.appearance-live .appearance-actions {
     position: relative;
@@ -2835,24 +2618,15 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 13px;
 
     background:
-        rgba(9, 5, 17, .92) !important;
+        rgba(9,5,17,.97) !important;
 }
 
-
-/*
-    Footer da okunabilir kalacak.
-*/
 
 .app.appearance-live .creator-footer {
     background:
         linear-gradient(
             180deg,
-            rgba(10, 5, 18, .94),
-            rgba(6, 3, 12, .98)
+            rgba(10,5,18,.94),
+            rgba(6,3,12,.98)
         ) !important;
-}
-
-
-.app.appearance-live .glass-reflection {
-    display: none !important;
 }
